@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import Banner from "@/components/Banner";
+import { AiIllustration, MlIllustration, CloudIllustration, DataIllustration } from "@/components/TileIllustrations";
 import TestimonialCard from "@/components/TestimonialCard";
 import ServiceTile from "@/components/ServiceTile";
 import LogoMarquee from "@/components/LogoMarquee";
@@ -124,7 +125,11 @@ export default function HomePage() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
           style={{ height: "clamp(420px, 55vw, 680px)" }}
         >
-          {EXPERTISE_TILES.map((tile, i) => (
+          {(() => {
+            const TILE_ILLUSTRATIONS = [AiIllustration, MlIllustration, CloudIllustration, DataIllustration];
+            return EXPERTISE_TILES.map((tile, i) => {
+              const Illustration = TILE_ILLUSTRATIONS[i];
+              return (
             <div
               key={tile.title}
               className="relative overflow-hidden group cursor-pointer"
@@ -133,12 +138,7 @@ export default function HomePage() {
                 borderTop: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              <Image
-                src={tile.image}
-                alt={tile.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+              <Illustration />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(to top, rgba(7,8,15,0.96) 0%, rgba(7,8,15,0.5) 55%, rgba(7,8,15,0.15) 100%)" }}
@@ -165,7 +165,9 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          ))}
+              );
+            });
+          })()}
         </div>
       </section>
 
